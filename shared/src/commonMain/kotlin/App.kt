@@ -12,7 +12,7 @@ import components.WelcomeScreen
 @Composable
 fun App(person: Person) {
     MaterialTheme {
-        var showCurriculumVitae by remember { mutableStateOf(false) }
+        var showCurriculumVitae by remember { mutableStateOf(true) }
 
         AnimatedVisibility(showCurriculumVitae) {
             CurriculumVitae(person)

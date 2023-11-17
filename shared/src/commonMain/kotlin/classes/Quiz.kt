@@ -1,3 +1,3 @@
 package classes
 
-data class Quiz(val question: List<Question>)
+data class Quiz(val questions: List<Question>)

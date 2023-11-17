@@ -1,10 +1,13 @@
 import androidx.compose.desktop.ui.tooling.preview.Preview
 import androidx.compose.runtime.Composable
+import classes.Answer
 import classes.Education
 import classes.Job
 import classes.Person
+import classes.Question
+import classes.Quiz
 import classes.Skill
-import components.CurriculumVitae
+import components.QuestionScreen
 
 // actual fun getPlatformName(): String = "Desktop"
 
@@ -39,10 +42,45 @@ val person = Person(
     listOfJobs,
 )
 
-@Composable fun MainView() = App(person)
+val quiz = Quiz(
+    listOf<Question>(
+        Question(
+            0,
+            "quelle est la couleur du soleil ?",
+            2,
+            listOf<Answer>(
+                Answer(0, "marron"),
+                Answer(1, "vert"),
+                Answer(2, "orange"),
+                Answer(3, "le soleil n'a pas de couleur"),
+            ),
+        ),
+        Question(
+            1,
+            "quelle est la couleur d'un marron ?",
+            0,
+            listOf<Answer>(
+                Answer(0, "marron"),
+                Answer(1, "vert"),
+                Answer(2, "orange"),
+            ),
+        ),
+        Question(
+            0,
+            "quelle est la couleur de l'herbe ?",
+            1,
+            listOf<Answer>(
+                Answer(0, "marron"),
+                Answer(1, "vert"),
+            ),
+        ),
+    ),
+)
+
+@Composable fun MainView() = QuestionScreen(quiz)
 
 @Preview
 @Composable
 fun AppPreview() {
-    CurriculumVitae(person)
+    QuestionScreen(quiz)
 }

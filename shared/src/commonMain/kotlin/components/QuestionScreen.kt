@@ -24,10 +24,10 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
-import classes.Quiz
+import network.data.Question
 
 @Composable
-fun QuestionScreen(quiz: Quiz) {
+fun QuestionScreen(questions: List<Question>) {
     var questionProgress by remember { mutableStateOf(0) }
     var selectedButton by remember { mutableStateOf(0) }
     var correctAnswer by remember { mutableStateOf(0) }
@@ -37,14 +37,14 @@ fun QuestionScreen(quiz: Quiz) {
         horizontalAlignment = Alignment.CenterHorizontally,
     ) {
         Card(backgroundColor = Color.Blue) {
-            Text(quiz.questions[questionProgress].label)
+            Text(questions[questionProgress].label)
         }
         Column(
             Modifier.selectableGroup(),
             verticalArrangement = Arrangement.Center,
             horizontalAlignment = Alignment.CenterHorizontally,
         ) {
-            quiz.questions[questionProgress].answers.forEach { answer ->
+            questions[questionProgress].answers.forEach { answer ->
                 Row(
                     Modifier.selectable(
                         selected = (answer.id == selectedButton),
@@ -61,11 +61,11 @@ fun QuestionScreen(quiz: Quiz) {
         }
         Button(
             onClick = {
-                if (selectedButton == quiz.questions[questionProgress].correctAnswerId) { correctAnswer++ }
-                if (questionProgress < quiz.questions.size - 1) { questionProgress++ } else { null }
+                if (selectedButton == questions[questionProgress].correctAnswerId) { correctAnswer++ }
+                if (questionProgress < questions.size - 1) { questionProgress++ } else { null }
             },
         ) {
-            Text(text = (if (questionProgress < quiz.questions.size - 1) { "poursuivre" } else { "terminer" }))
+            Text(text = (if (questionProgress < questions.size - 1) { "poursuivre" } else { "terminer" }))
         }
         Scaffold(
             bottomBar = {
@@ -73,7 +73,7 @@ fun QuestionScreen(quiz: Quiz) {
                     /* Bottom app bar content */
                     LinearProgressIndicator(
                         modifier = Modifier.fillMaxWidth().height(10.dp),
-                        progress = ((questionProgress + 1).toFloat() / quiz.questions.size),
+                        progress = ((questionProgress + 1).toFloat() / questions.size),
                         color = Color.Red,
                     )
                 }

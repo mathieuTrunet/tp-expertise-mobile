@@ -1,22 +1,21 @@
-import androidx.compose.animation.AnimatedVisibility
+
 import androidx.compose.material.MaterialTheme
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
-import classes.Person
-import components.CurriculumVitae
-import components.WelcomeScreen
+import components.QuestionScreen
+import network.QuizRepository
+
+private val repository = QuizRepository()
 
 @Composable
-fun App(person: Person) {
+internal fun App() {
     MaterialTheme {
-        var showCurriculumVitae by remember { mutableStateOf(true) }
+        val questions = repository.questionState.collectAsState()
 
-        AnimatedVisibility(showCurriculumVitae) {
-            CurriculumVitae(person)
+        if (questions.value.isNotEmpty()) {
+            QuestionScreen(questions.value)
         }
-        WelcomeScreen()
     }
 }

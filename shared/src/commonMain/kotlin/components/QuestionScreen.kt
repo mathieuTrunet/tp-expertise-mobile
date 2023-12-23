@@ -1,6 +1,8 @@
 package components
 
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxHeight
@@ -22,22 +24,31 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
+import moe.tlaster.precompose.navigation.Navigator
 import network.data.Question
 
+val colorList = listOf<Color>(
+    Color(96, 239, 255, 100),
+    Color(255, 147, 15, 100),
+)
+
 @Composable
-fun QuestionScreen(questions: List<Question>) {
+fun QuestionScreen(navigator: Navigator, questions: List<Question>) {
     var questionProgress by remember { mutableStateOf(0) }
     var selectedButton by remember { mutableStateOf(0) }
-    var correctAnswer by remember { mutableStateOf(0) }
+    var score by remember { mutableStateOf(0) }
     Column(
         modifier = Modifier.fillMaxWidth().fillMaxHeight(),
         verticalArrangement = Arrangement.Center,
         horizontalAlignment = Alignment.CenterHorizontally,
     ) {
-        Card(backgroundColor = Color.Blue) {
-            Text(questions[questionProgress].label)
+        Card {
+            Box(
+                modifier = Modifier.background(brush = Brush.linearGradient(colors = colorList)),
+            ) { Text(questions[questionProgress].label) }
         }
         Column(
             Modifier.selectableGroup(),
@@ -61,8 +72,9 @@ fun QuestionScreen(questions: List<Question>) {
         }
         Button(
             onClick = {
-                if (selectedButton == questions[questionProgress].correctAnswerId) { correctAnswer++ }
-                if (questionProgress < questions.size - 1) { questionProgress++ } else { null }
+                if (selectedButton == questions[questionProgress].correctAnswerId) { score++ }
+                if (questionProgress < questions.size - 1) { questionProgress++ } else {
+                    navigator.navigate("/score/$score.${questions.size}") }
             },
         ) {
             Text(text = (if (questionProgress < questions.size - 1) { "poursuivre" } else { "terminer" }))

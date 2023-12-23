@@ -33,6 +33,7 @@ kotlin {
                 implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.7.3") // For making asynchronous calls
                 implementation("io.ktor:ktor-client-content-negotiation:2.3.4") // Simplify handling of content type based deserialization
                 implementation("io.ktor:ktor-serialization-kotlinx-json:2.3.4") // make your dataclasses serializable
+                api("moe.tlaster:precompose:1.5.7")
             }
         }
         val androidMain by getting {
@@ -83,4 +84,7 @@ android {
     kotlin {
         jvmToolchain(17)
     }
+}
+dependencies {
+    implementation("androidx.compose.ui:ui-graphics-android:1.5.4")
 }

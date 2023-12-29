@@ -37,4 +37,4 @@ val person = Person(
     listOfJobs,
 )
 
-@Composable fun MainView() = App(person)
+@Composable fun MainView() = App()

@@ -3,8 +3,8 @@ data class Ingredient(val id: Int, val emoji: String, val name: String)
 val ingredients = listOf(
     Ingredient(9037, "🥑", "avocado"),
     Ingredient(9040, "🍌", "banana"),
-    Ingredient(23572, "🥩 ", "beef"),
-    Ingredient(18064, "🍞 ", "bread"),
+    Ingredient(23572, "🥩", "beef"),
+    Ingredient(18064, "🍞", "bread"),
     Ingredient(11090, "🥦", "broccoli"),
     Ingredient(9326, "🍉", "watermelon"),
     Ingredient(9150, "🍋", "lemon"),

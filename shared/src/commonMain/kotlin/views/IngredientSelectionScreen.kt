@@ -1,43 +1,90 @@
 package views
 
+import androidx.compose.foundation.Image
+import androidx.compose.foundation.background
+import androidx.compose.foundation.border
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material.Button
+import androidx.compose.material.Card
 import androidx.compose.material.FloatingActionButton
 import androidx.compose.material.Icon
+import androidx.compose.material.Surface
 import androidx.compose.material.Text
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Info
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
+import androidx.compose.ui.draw.shadow
+import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
-import components.IngredientBoard
+import androidx.compose.ui.unit.sp
+import components.ingredientBoard
 import ingredients
+import org.jetbrains.compose.resources.ExperimentalResourceApi
+import org.jetbrains.compose.resources.painterResource
 
+@OptIn(ExperimentalResourceApi::class)
 @Composable
-fun IngredientSelectionScreen() {
+fun ingredientSelectionScreen() {
     Row {
-        Column(modifier = Modifier.weight(2f)) {}
-        Column(modifier = Modifier.weight(17f), horizontalAlignment = Alignment.CenterHorizontally) {
-            Box(Modifier.weight(2f)) { Text("let him cook") }
-            Box(Modifier.weight(2f)) {}
-            Box(Modifier.weight(4f)) { IngredientBoard(ingredients) }
-            Box(Modifier.weight(0.7f)) {}
-            Box(Modifier.weight(1.5f)) { Button({ }) { Text("let's cook ") } }
-            Box(Modifier.weight(0.7f)) {}
+        Image(
+            painterResource("kitchen-background.jpg"),
+            contentDescription = null,
+        )
+    }
+    Row {
+        Box(Modifier.weight(2f)) {}
+        Column(Modifier.weight(4f), horizontalAlignment = Alignment.CenterHorizontally) {
+            Column(Modifier.weight(2f)) { }
+            Column(Modifier.weight(2f)) {
+                Card(elevation = 10.dp, shape = RoundedCornerShape(30)) {
+                    Box(Modifier.padding(5.dp)) {
+                        Text("let him cook 👨‍🍳", fontSize = 25.sp)
+                    }
+                }
+            }
+            Column(Modifier.weight(10f).border(2.dp, Color.Green)) {}
         }
-        Column(modifier = Modifier.weight(2f)) {}
+        Box(Modifier.weight(2f)) {}
+    }
+    Column {
+        Row(Modifier.weight(1f)) {}
+        Row(
+            Modifier.weight(2.1f),
+        ) {
+            Surface(
+                color = Color(82, 183, 136),
+                shape = RoundedCornerShape(topStart = 50.dp, topEnd = 50.dp),
+            ) {
+                Row {
+                    Column(modifier = Modifier.weight(2f)) {}
+                    Column(
+                        modifier = Modifier.weight(40f),
+                        horizontalAlignment = Alignment.CenterHorizontally,
+                    ) {
+                        Box(Modifier.weight(1f)) {}
+                        Box(Modifier.weight(6f)) { ingredientBoard(ingredients) }
+                        Box(Modifier.weight(0.7f)) {}
+                        Box(Modifier.weight(2f)) { sendingButton() }
+                    }
+                    Column(modifier = Modifier.weight(2f)) {}
+                }
+            }
+        }
     }
     Row {
         Column(Modifier.weight(95f)) {}
-        Column(Modifier.weight(10f), horizontalAlignment = Alignment.CenterHorizontally) {
+        Column(Modifier.weight(20f), horizontalAlignment = Alignment.CenterHorizontally) {
             Box(Modifier.weight(5f)) {}
-            Box(Modifier.weight(10f)) {
-                HelperFab()
+            Box(Modifier.weight(20f)) {
+                helperFab()
             }
             Box(Modifier.weight(95f)) {}
         }
@@ -46,11 +93,34 @@ fun IngredientSelectionScreen() {
 }
 
 @Composable
-fun HelperFab() {
+fun helperFab() {
     FloatingActionButton(
         onClick = {},
-        backgroundColor = Color(168, 255, 120),
+        Modifier.border(2.dp, Color(18, 84, 24), RoundedCornerShape(40)),
+        shape = RoundedCornerShape(40),
+        backgroundColor = Color(82, 183, 136),
         contentColor = Color(18, 84, 24),
-        shape = RoundedCornerShape(18.dp),
     ) { Icon(Icons.Filled.Info, "How to do the cookin ?") }
+}
+
+@Composable
+fun sendingButton() {
+    Box(
+        Modifier
+            .clip(RoundedCornerShape(20.dp))
+            .clickable {}.shadow(8.dp)
+            .background(
+                Brush.linearGradient(
+                    listOf(
+                        Color(168, 255, 120),
+                        Color(120, 255, 214),
+                    ),
+                ),
+                RoundedCornerShape(40),
+            )
+            .border(2.dp, Color(18, 84, 24), RoundedCornerShape(40))
+            .padding(14.dp),
+    ) {
+        Text("let's do the cookin")
+    }
 }

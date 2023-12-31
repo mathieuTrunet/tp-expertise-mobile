@@ -1,13 +1,11 @@
 
 import androidx.compose.material.MaterialTheme
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.setValue
-import views.IngredientSelectionScreen
+import views.ingredientSelectionScreen
 
 @Composable
 internal fun App() {
     MaterialTheme {
-        IngredientSelectionScreen()
+        ingredientSelectionScreen()
     }
 }

@@ -96,7 +96,6 @@ fun ingredientSelectionScreen() {
 fun helperFab() {
     FloatingActionButton(
         onClick = {},
-        Modifier.border(2.dp, Color(18, 84, 24), RoundedCornerShape(40)),
         shape = RoundedCornerShape(40),
         backgroundColor = Color(82, 183, 136),
         contentColor = Color(18, 84, 24),

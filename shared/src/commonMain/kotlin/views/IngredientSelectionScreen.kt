@@ -26,9 +26,12 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import components.ingredientBoard
-import ingredients
+import constants.ingredients
+import getPlatformName
 import org.jetbrains.compose.resources.ExperimentalResourceApi
 import org.jetbrains.compose.resources.painterResource
+
+val isPlatformDesktop: () -> Boolean = { getPlatformName() === "Desktop" }
 
 @OptIn(ExperimentalResourceApi::class)
 @Composable
@@ -39,6 +42,7 @@ fun ingredientSelectionScreen() {
             contentDescription = null,
         )
     }
+
     Row {
         Box(Modifier.weight(2f)) {}
         Column(Modifier.weight(4f), horizontalAlignment = Alignment.CenterHorizontally) {
@@ -54,10 +58,17 @@ fun ingredientSelectionScreen() {
         }
         Box(Modifier.weight(2f)) {}
     }
+
     Column {
         Row(Modifier.weight(1f)) {}
         Row(
-            Modifier.weight(2.1f),
+            Modifier.weight(
+                if (isPlatformDesktop()) {
+                    2.1f
+                } else {
+                    2.1f
+                },
+            ),
         ) {
             Surface(
                 color = Color(82, 183, 136),
@@ -79,6 +90,7 @@ fun ingredientSelectionScreen() {
             }
         }
     }
+
     Row {
         Column(Modifier.weight(95f)) {}
         Column(Modifier.weight(20f), horizontalAlignment = Alignment.CenterHorizontally) {

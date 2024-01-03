@@ -1,3 +1,5 @@
+package constants
+
 data class Ingredient(val emoji: String, val name: String)
 
 val ingredients =

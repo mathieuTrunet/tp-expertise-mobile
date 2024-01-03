@@ -9,3 +9,5 @@ internal fun App() {
         ingredientSelectionScreen()
     }
 }
+
+expect fun getPlatformName(): String

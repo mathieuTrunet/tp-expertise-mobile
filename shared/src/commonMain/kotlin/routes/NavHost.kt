@@ -1,3 +1,5 @@
+package routes
+
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import components.QuestionScreen
@@ -28,7 +30,6 @@ internal fun rootNavHost() {
         scene(
             route = "/quiz",
             navTransition = NavTransition(),
-
         ) {
             val questions = quizRepository.questionState.collectAsState()
 

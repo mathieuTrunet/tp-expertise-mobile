@@ -2,6 +2,10 @@ package constants
 
 data class Ingredient(val emoji: String, val name: String)
 
+val resolveEmojiFromIngredientName: (String) -> String = { ingredientName ->
+    ingredients.find { ingredient -> ingredient.name === ingredientName }?.emoji ?: "not found"
+}
+
 val ingredients =
     listOf(
         Ingredient("🥑", "avocado"),

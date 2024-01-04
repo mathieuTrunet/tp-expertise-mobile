@@ -17,6 +17,10 @@ import androidx.compose.material.Text
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Info
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -36,6 +40,9 @@ val isPlatformDesktop: () -> Boolean = { getPlatformName() === "Desktop" }
 @OptIn(ExperimentalResourceApi::class)
 @Composable
 fun ingredientSelectionScreen() {
+    var showBottomSheet by remember { mutableStateOf(false) }
+    // val sheetState = rememberModalBottomSheetState()
+
     Row {
         Image(
             painterResource("kitchen-background.jpg"),
@@ -46,7 +53,7 @@ fun ingredientSelectionScreen() {
     Row {
         Box(Modifier.weight(2f)) {}
         Column(Modifier.weight(4f), horizontalAlignment = Alignment.CenterHorizontally) {
-            Column(Modifier.weight(2f)) { }
+            Column(Modifier.weight(1.3f)) { }
             Column(Modifier.weight(2f)) {
                 Card(elevation = 10.dp, shape = RoundedCornerShape(30)) {
                     Box(Modifier.padding(5.dp)) {
@@ -66,7 +73,7 @@ fun ingredientSelectionScreen() {
                 if (isPlatformDesktop()) {
                     2.1f
                 } else {
-                    2.1f
+                    2.8f
                 },
             ),
         ) {
@@ -96,7 +103,7 @@ fun ingredientSelectionScreen() {
         Column(Modifier.weight(20f), horizontalAlignment = Alignment.CenterHorizontally) {
             Box(Modifier.weight(5f)) {}
             Box(Modifier.weight(20f)) {
-                helperFab()
+                helperFab { clicked -> showBottomSheet = clicked }
             }
             Box(Modifier.weight(95f)) {}
         }
@@ -105,9 +112,9 @@ fun ingredientSelectionScreen() {
 }
 
 @Composable
-fun helperFab() {
+fun helperFab(onClick: (Boolean) -> Unit) {
     FloatingActionButton(
-        onClick = {},
+        onClick = { onClick(true) },
         shape = RoundedCornerShape(40),
         backgroundColor = Color(82, 183, 136),
         contentColor = Color(18, 84, 24),
@@ -119,7 +126,7 @@ fun sendingButton() {
     Box(
         Modifier
             .clip(RoundedCornerShape(20.dp))
-            .clickable {}.shadow(8.dp)
+            .clickable { }.shadow(8.dp)
             .background(
                 Brush.linearGradient(
                     listOf(

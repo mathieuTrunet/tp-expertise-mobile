@@ -3,8 +3,10 @@ package constants
 data class Ingredient(val emoji: String, val name: String)
 
 val resolveEmojiFromIngredientName: (String) -> String = { ingredientName ->
-    ingredients.find { ingredient -> ingredient.name === ingredientName }?.emoji ?: "not found"
+    ingredients.find { ingredient -> ingredient.name === ingredientName }?.emoji ?: ""
 }
+
+val getSelectedIngredientsAsString: (List<Ingredient>) -> String = { list -> list.joinToString(", ") { it.emoji } }
 
 val ingredients =
     listOf(

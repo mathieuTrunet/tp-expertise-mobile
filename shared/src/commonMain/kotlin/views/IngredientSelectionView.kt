@@ -1,9 +1,7 @@
 package views
 
 import androidx.compose.foundation.Image
-import androidx.compose.foundation.background
 import androidx.compose.foundation.border
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -23,13 +21,12 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.clip
-import androidx.compose.ui.draw.shadow
-import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import components.ingredientBoard
+import components.recipeSearchButton
+import constants.Ingredient
 import constants.ingredients
 import getPlatformName
 import org.jetbrains.compose.resources.ExperimentalResourceApi
@@ -42,6 +39,9 @@ val isPlatformDesktop: () -> Boolean = { getPlatformName() === "Desktop" }
 fun ingredientSelectionScreen() {
     var showBottomSheet by remember { mutableStateOf(false) }
     // val sheetState = rememberModalBottomSheetState()
+
+    var selectedIngredients by remember { mutableStateOf<List<Ingredient>>(emptyList()) }
+    val isAtLeastOneIngredientSelected = selectedIngredients.isNotEmpty()
 
     Row {
         Image(
@@ -88,9 +88,21 @@ fun ingredientSelectionScreen() {
                         horizontalAlignment = Alignment.CenterHorizontally,
                     ) {
                         Box(Modifier.weight(1f)) {}
-                        Box(Modifier.weight(6f)) { ingredientBoard(ingredients) }
+                        Box(Modifier.weight(6f)) {
+                            ingredientBoard(
+                                ingredientsDisplayed = ingredients,
+                                selectedIngredients = selectedIngredients,
+                                onIngredientChanged = { ingredient, isSelected ->
+                                    if (isSelected) {
+                                        selectedIngredients += ingredient
+                                    } else {
+                                        selectedIngredients -= ingredient
+                                    }
+                                },
+                            )
+                        }
                         Box(Modifier.weight(0.7f)) {}
-                        Box(Modifier.weight(2f)) { sendingButton() }
+                        Box(Modifier.weight(2f)) { recipeSearchButton(isAtLeastOneIngredientSelected) }
                     }
                     Column(modifier = Modifier.weight(2f)) {}
                 }
@@ -119,26 +131,4 @@ fun helperFab(onClick: (Boolean) -> Unit) {
         backgroundColor = Color(82, 183, 136),
         contentColor = Color(18, 84, 24),
     ) { Icon(Icons.Filled.Info, "How to do the cookin ?") }
-}
-
-@Composable
-fun sendingButton() {
-    Box(
-        Modifier
-            .clip(RoundedCornerShape(20.dp))
-            .clickable { }.shadow(8.dp)
-            .background(
-                Brush.linearGradient(
-                    listOf(
-                        Color(168, 255, 120),
-                        Color(120, 255, 214),
-                    ),
-                ),
-                RoundedCornerShape(40),
-            )
-            .border(2.dp, Color(18, 84, 24), RoundedCornerShape(40))
-            .padding(14.dp),
-    ) {
-        Text("let's do the cookin")
-    }
 }

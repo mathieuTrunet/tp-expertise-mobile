@@ -22,8 +22,6 @@ class QuizRepository() {
     private suspend fun fetchQuiz(): List<Question> = quizAPI.getAllQuestions().questions
 
     private fun updateQuiz() {
-        coroutineScope.launch {
-            _questionState.update { fetchQuiz() }
-        }
+        coroutineScope.launch { _questionState.update { fetchQuiz() } }
     }
 }

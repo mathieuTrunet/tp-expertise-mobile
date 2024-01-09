@@ -1,12 +1,12 @@
 
 import androidx.compose.material.MaterialTheme
 import androidx.compose.runtime.Composable
-import views.ingredientSelectionScreen
+import views.ingredientSelectionView
 
 @Composable
 internal fun App() {
     MaterialTheme {
-        ingredientSelectionScreen()
+        ingredientSelectionView()
     }
 }
 

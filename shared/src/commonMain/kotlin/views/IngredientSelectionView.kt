@@ -36,7 +36,7 @@ val isPlatformDesktop: () -> Boolean = { getPlatformName() === "Desktop" }
 
 @OptIn(ExperimentalResourceApi::class)
 @Composable
-fun ingredientSelectionScreen() {
+fun ingredientSelectionView() {
     var showBottomSheet by remember { mutableStateOf(false) }
     // val sheetState = rememberModalBottomSheetState()
 

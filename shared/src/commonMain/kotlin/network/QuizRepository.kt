@@ -9,7 +9,6 @@ import kotlinx.coroutines.launch
 import network.data.Question
 
 class QuizRepository() {
-
     private val quizAPI = QuizAPI()
     private val coroutineScope = CoroutineScope(Dispatchers.IO)
 

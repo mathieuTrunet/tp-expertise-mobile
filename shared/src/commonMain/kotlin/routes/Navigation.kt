@@ -6,9 +6,7 @@ import moe.tlaster.precompose.navigation.NavHost
 import moe.tlaster.precompose.navigation.rememberNavigator
 import moe.tlaster.precompose.navigation.transition.NavTransition
 import network.FoodRepository
-import network.data.Recipe
 import views.ingredientSelectionView
-import views.recipeFoundView
 
 private val foodRepository = FoodRepository(API_KEY)
 
@@ -24,8 +22,6 @@ internal fun navigation() {
             ingredientSelectionView()
         }
         scene("/recipe/by-ingredients", navTransition = NavTransition()) {
-            val randomRecipe = foodRepository.
-            recipeFoundView()
         }
     }
 }

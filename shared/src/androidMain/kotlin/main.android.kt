@@ -1,8 +1,8 @@
 import androidx.compose.runtime.Composable
-import classes.Education
-import classes.Job
-import classes.Person
-import classes.Skill
+import quiz.classes.Education
+import quiz.classes.Job
+import quiz.classes.Person
+import quiz.classes.Skill
 
 actual fun getPlatformName(): String = "Android"
 

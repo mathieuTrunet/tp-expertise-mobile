@@ -9,6 +9,7 @@ import io.ktor.serialization.kotlinx.json.json
 import kotlinx.serialization.json.Json
 import letHimCook.network.data.RandomRecipeResponse
 import letHimCook.network.data.Recipe
+import letHimCook.network.data.RecipeShort
 
 class SpoonacularAPI(private val apiKey: String) {
     private val httpClient =
@@ -30,7 +31,18 @@ class SpoonacularAPI(private val apiKey: String) {
         return try {
             httpClient.get(url).body<RandomRecipeResponse>().recipes.first()
         } catch (error: Exception) {
-            println(error.message)
+            println(error.cause)
+            throw RuntimeException(error.message)
+        }
+    }
+
+    suspend fun getRecipeIdListFromIngredient(formattedIngredientList: String): List<RecipeShort> {
+        val url = "https://api.spoonacular.com/recipes/findByIngredients?apiKey=$apiKey&ingredients=apple&number=100"
+
+        return try {
+            httpClient.get(url).body<List<RecipeShort>>()
+        } catch (error: Exception) {
+            println(error.cause)
             throw RuntimeException(error.message)
         }
     }

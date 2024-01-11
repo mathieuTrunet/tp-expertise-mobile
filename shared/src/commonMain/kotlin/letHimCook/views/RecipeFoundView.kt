@@ -24,6 +24,7 @@ fun recipeFoundView(
     val (loading, setLoading) = remember { mutableStateOf(true) }
 
     LaunchedEffect(true) {
+        println(api.getRandomRecipe())
         setRecipe(api.getRandomRecipe())
         setLoading(false)
     }

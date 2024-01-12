@@ -94,7 +94,7 @@ enum class CardType {
 }
 
 @Composable
-fun ingredientscard(
+fun ingredientsCard(
     ingredients: List<Ingredient>,
     cardtype: CardType,
 ) {
@@ -175,13 +175,13 @@ fun recipeShortCard(
                             textAlign = TextAlign.Center,
                         )
                         if (!recipe.usedIngredients.isNullOrEmpty()) {
-                            ingredientscard(recipe.usedIngredients, CardType.USED)
+                            ingredientsCard(recipe.usedIngredients, CardType.USED)
                         }
                         if (!recipe.missedIngredients.isNullOrEmpty()) {
-                            ingredientscard(recipe.missedIngredients, CardType.MISSED)
+                            ingredientsCard(recipe.missedIngredients, CardType.MISSED)
                         }
                         if (!recipe.unusedIngredients.isNullOrEmpty()) {
-                            ingredientscard(recipe.unusedIngredients, CardType.UNUSED)
+                            ingredientsCard(recipe.unusedIngredients, CardType.UNUSED)
                         }
                     }
                 }

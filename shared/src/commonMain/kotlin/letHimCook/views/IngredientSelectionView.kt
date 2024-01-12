@@ -27,7 +27,7 @@ import androidx.compose.ui.unit.sp
 import getPlatformName
 import letHimCook.components.ingredientBoard
 import letHimCook.components.recipeSearchButton
-import letHimCook.constants.Ingredient
+import letHimCook.constants.DisplayIngredient
 import letHimCook.constants.ingredients
 import moe.tlaster.precompose.navigation.Navigator
 import org.jetbrains.compose.resources.ExperimentalResourceApi
@@ -35,13 +35,17 @@ import org.jetbrains.compose.resources.painterResource
 
 val isPlatformDesktop: () -> Boolean = { getPlatformName() === "Desktop" }
 
+val getFormattedIngredientList: (List<DisplayIngredient>) -> String = { ingredients ->
+    ingredients.joinToString(",") { it.name }
+}
+
 @OptIn(ExperimentalResourceApi::class)
 @Composable
 fun ingredientSelectionView(navigator: Navigator) {
     var showBottomSheet by remember { mutableStateOf(false) }
     // val sheetState = rememberModalBottomSheetState()
 
-    var selectedIngredients by remember { mutableStateOf<List<Ingredient>>(emptyList()) }
+    var selectedIngredients by remember { mutableStateOf<List<DisplayIngredient>>(emptyList()) }
     val isAtLeastOneIngredientSelected = selectedIngredients.isNotEmpty()
 
     Row {
@@ -103,7 +107,9 @@ fun ingredientSelectionView(navigator: Navigator) {
                             )
                         }
                         Box(Modifier.weight(0.7f)) {}
-                        Box(Modifier.weight(2f)) { recipeSearchButton(isAtLeastOneIngredientSelected, navigator) }
+                        Box(
+                            Modifier.weight(2f),
+                        ) { recipeSearchButton(isAtLeastOneIngredientSelected, navigator, getFormattedIngredientList(selectedIngredients)) }
                     }
                     Column(modifier = Modifier.weight(2f)) {}
                 }

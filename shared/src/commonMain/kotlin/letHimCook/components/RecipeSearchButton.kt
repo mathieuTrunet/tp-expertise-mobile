@@ -20,11 +20,12 @@ import moe.tlaster.precompose.navigation.Navigator
 fun recipeSearchButton(
     isAtLeastOneIngredientSelected: Boolean,
     navigator: Navigator,
+    ingredientList: String,
 ) {
     Box(
         Modifier
             .clip(RoundedCornerShape(20.dp))
-            .clickable(isAtLeastOneIngredientSelected) { navigator.navigate("/recipe") }.shadow(8.dp)
+            .clickable(isAtLeastOneIngredientSelected) { navigator.navigate("/recipe/search/$ingredientList") }.shadow(8.dp)
             .background(
                 Brush.linearGradient(
                     getColors(isAtLeastOneIngredientSelected),

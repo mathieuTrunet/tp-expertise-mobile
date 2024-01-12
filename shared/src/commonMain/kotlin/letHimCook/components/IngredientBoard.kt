@@ -19,13 +19,13 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
-import letHimCook.constants.Ingredient
+import letHimCook.constants.DisplayIngredient
 
 @Composable
 fun ingredientBoard(
-    ingredientsDisplayed: List<Ingredient>,
-    selectedIngredients: List<Ingredient>,
-    onIngredientChanged: (Ingredient, Boolean) -> Unit,
+    ingredientsDisplayed: List<DisplayIngredient>,
+    selectedIngredients: List<DisplayIngredient>,
+    onIngredientChanged: (DisplayIngredient, Boolean) -> Unit,
 ) {
     val columnSize = 5
 
@@ -53,7 +53,7 @@ fun ingredientBoard(
 
 @Composable
 fun ingredientButton(
-    ingredient: Ingredient,
+    ingredient: DisplayIngredient,
     isSelected: Boolean,
     onSelected: (Boolean) -> Unit,
 ) {

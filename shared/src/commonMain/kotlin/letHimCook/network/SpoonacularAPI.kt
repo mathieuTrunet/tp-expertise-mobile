@@ -37,7 +37,7 @@ class SpoonacularAPI(private val apiKey: String) {
     }
 
     suspend fun getRecipeIdListFromIngredient(formattedIngredientList: String): List<RecipeShort> {
-        val url = "https://api.spoonacular.com/recipes/findByIngredients?apiKey=$apiKey&ingredients=apple&number=100"
+        val url = "https://api.spoonacular.com/recipes/findByIngredients?apiKey=$apiKey&number=20&ingredients=$formattedIngredientList"
 
         return try {
             httpClient.get(url).body<List<RecipeShort>>()
@@ -45,5 +45,17 @@ class SpoonacularAPI(private val apiKey: String) {
             println(error.cause)
             throw RuntimeException(error.message)
         }
+    }
+
+    suspend fun getSimilarRecipeList(recipeId: Int): List<RecipeShort> {
+        val url = "https://api.spoonacular.com/recipes/$recipeId/similar?apiKey=$apiKey&number=8"
+
+        return httpClient.get(url).body<List<RecipeShort>>()
+    }
+
+    suspend fun getRecipeById(recipeId: Int): Recipe {
+        val url = "https://api.spoonacular.com/recipes/$recipeId/information?apiKey=$apiKey&includeNutrition=false"
+
+        return httpClient.get(url).body<Recipe>()
     }
 }

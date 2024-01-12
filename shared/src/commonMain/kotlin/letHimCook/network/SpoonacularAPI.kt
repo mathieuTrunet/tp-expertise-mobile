@@ -10,6 +10,7 @@ import kotlinx.serialization.json.Json
 import letHimCook.network.data.RandomRecipeResponse
 import letHimCook.network.data.Recipe
 import letHimCook.network.data.RecipeShort
+import letHimCook.network.data.SimilarRecipe
 
 class SpoonacularAPI(private val apiKey: String) {
     private val httpClient =
@@ -47,15 +48,25 @@ class SpoonacularAPI(private val apiKey: String) {
         }
     }
 
-    suspend fun getSimilarRecipeList(recipeId: Int): List<RecipeShort> {
+    suspend fun getSimilarRecipeList(recipeId: Int): List<SimilarRecipe> {
         val url = "https://api.spoonacular.com/recipes/$recipeId/similar?apiKey=$apiKey&number=8"
 
-        return httpClient.get(url).body<List<RecipeShort>>()
+        return try {
+            httpClient.get(url).body<List<SimilarRecipe>>()
+        } catch (error: Exception) {
+            println(error.cause)
+            throw RuntimeException(error.message)
+        }
     }
 
     suspend fun getRecipeById(recipeId: Int): Recipe {
         val url = "https://api.spoonacular.com/recipes/$recipeId/information?apiKey=$apiKey&includeNutrition=false"
 
-        return httpClient.get(url).body<Recipe>()
+        return try {
+            httpClient.get(url).body<Recipe>()
+        } catch (error: Exception) {
+            println(error.cause)
+            throw RuntimeException(error.message)
+        }
     }
 }

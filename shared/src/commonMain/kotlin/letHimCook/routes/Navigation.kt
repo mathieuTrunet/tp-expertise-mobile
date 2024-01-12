@@ -38,5 +38,11 @@ internal fun navigation() {
                 recipeView(navigator, api, recipeId)
             }
         }
+        scene(
+            "/recipe/random",
+            navTransition = NavTransition(),
+        ) {
+            recipeView(navigator, api, 0)
+        }
     }
 }

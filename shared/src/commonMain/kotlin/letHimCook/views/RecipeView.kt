@@ -43,7 +43,7 @@ import letHimCook.constants.resolveEmojiFromIngredientName
 import letHimCook.network.SpoonacularAPI
 import letHimCook.network.data.Ingredient
 import letHimCook.network.data.Recipe
-import letHimCook.network.data.RecipeShort
+import letHimCook.network.data.SimilarRecipe
 import letHimCook.network.data.Step
 import moe.tlaster.precompose.navigation.Navigator
 
@@ -57,14 +57,18 @@ fun recipeView(
     val (loading, setLoading) = remember { mutableStateOf(true) }
 
     LaunchedEffect(true) {
-        setRecipe(api.getRecipeById(recipeId!!))
+        if (recipeId == 0) {
+            setRecipe(api.getRandomRecipe())
+        } else {
+            setRecipe(api.getRecipeById(recipeId!!))
+        }
         setLoading(false)
     }
 
     if (loading) loadingBox()
 
     if (recipe != null) {
-        Scaffold(topBar = { recipeViewAppBar() }) {
+        Scaffold(topBar = { recipeViewAppBar(navigator) }) {
             Box(Modifier.padding(12.dp).fillMaxWidth(), contentAlignment = Alignment.Center) {
                 Column {
                     Box(Modifier.fillMaxWidth(), contentAlignment = Alignment.Center) {
@@ -77,7 +81,6 @@ fun recipeView(
                         )
                     }
                     Card(
-                        // backgroundColor = Color(82, 183, 136),
                         elevation = 8.dp,
                         shape = RoundedCornerShape(20.dp),
                         border = BorderStroke(2.dp, Color(18, 84, 24)),
@@ -115,7 +118,7 @@ fun similarRecipeCard(
     api: SpoonacularAPI,
     navigator: Navigator,
 ) {
-    val (similarRecipeList, setSimilarRecipeList) = remember { mutableStateOf<List<RecipeShort>>(emptyList()) }
+    val (similarRecipeList, setSimilarRecipeList) = remember { mutableStateOf<List<SimilarRecipe>>(emptyList()) }
     val (loading, setLoading) = remember { mutableStateOf(true) }
 
     LaunchedEffect(true) {
@@ -136,7 +139,7 @@ fun similarRecipeCard(
             }
             Column {
                 Column(Modifier.padding(8.dp).fillMaxWidth().padding(start = 8.dp)) {
-                    similarRecipeList.forEach { similarRecipe: RecipeShort ->
+                    similarRecipeList.forEach { similarRecipe: SimilarRecipe ->
                         Box(
                             Modifier
                                 .padding(8.dp)
@@ -144,7 +147,7 @@ fun similarRecipeCard(
                                 .border(2.dp, Color(18, 84, 24), RoundedCornerShape(40))
                                 .fillMaxWidth()
                                 .clip(RoundedCornerShape(60.dp))
-                                .clickable { navigator.navigate("/") },
+                                .clickable { navigator.navigate("/recipe/${similarRecipe.id}") },
                             contentAlignment = Alignment.Center,
                         ) {
                             Box(
@@ -236,7 +239,7 @@ fun dietBox(text: String) {
 }
 
 @Composable
-fun recipeViewAppBar() {
+fun recipeViewAppBar(navigator: Navigator) {
     TopAppBar(backgroundColor = Color(82, 183, 136), elevation = 8.dp) {
         Icon(
             imageVector = Icons.Filled.ArrowBack,
@@ -245,7 +248,7 @@ fun recipeViewAppBar() {
                 Modifier
                     .size(30.dp)
                     .clip(RoundedCornerShape(100.dp))
-                    .clickable {},
+                    .clickable { navigator.goBack() },
         )
     }
 }

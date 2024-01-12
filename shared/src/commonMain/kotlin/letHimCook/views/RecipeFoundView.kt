@@ -23,6 +23,7 @@ import androidx.compose.material.Text
 import androidx.compose.material.TopAppBar
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
+import androidx.compose.material.icons.filled.Create
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.mutableStateOf
@@ -43,6 +44,7 @@ import letHimCook.constants.resolveEmojiFromIngredientName
 import letHimCook.network.SpoonacularAPI
 import letHimCook.network.data.Ingredient
 import letHimCook.network.data.RecipeShort
+import moe.tlaster.precompose.navigation.NavOptions
 import moe.tlaster.precompose.navigation.Navigator
 
 @Composable
@@ -62,7 +64,7 @@ fun recipeFoundView(
     if (loading) {
         loadingBox()
     } else {
-        Scaffold(topBar = { recipeSearchAppBar() }) {
+        Scaffold(topBar = { recipeSearchAppBar(navigator) }) {
             Box(Modifier.padding(12.dp).fillMaxWidth(), contentAlignment = Alignment.Center) {
                 Column {
                     if (recipeList.isEmpty()) {
@@ -145,7 +147,9 @@ fun recipeShortCard(
     navigator: Navigator,
 ) {
     Card(
-        Modifier.padding(8.dp).clickable { navigator.navigate("/recipe/${recipe.id}") }.clip(RoundedCornerShape(20.dp)),
+        Modifier.padding(8.dp).clickable {
+            navigator.navigate("/recipe/${recipe.id}", NavOptions(launchSingleTop = true))
+        }.clip(RoundedCornerShape(20.dp)),
         shape = RoundedCornerShape(20.dp),
         backgroundColor = Color(82, 183, 136),
         border = BorderStroke(2.dp, Color(18, 84, 24)),
@@ -187,7 +191,7 @@ fun recipeShortCard(
 }
 
 @Composable
-fun recipeSearchAppBar() {
+fun recipeSearchAppBar(navigator: Navigator) {
     TopAppBar(backgroundColor = Color(82, 183, 136), elevation = 8.dp) {
         Icon(
             imageVector = Icons.Filled.ArrowBack,
@@ -196,7 +200,15 @@ fun recipeSearchAppBar() {
                 Modifier
                     .size(30.dp)
                     .clip(RoundedCornerShape(100.dp))
-                    .clickable {},
+                    .clickable { navigator.goBack() },
+        )
+        Icon(
+            imageVector = Icons.Filled.Create,
+            contentDescription = null,
+            modifier =
+                Modifier.size(30.dp).clip(
+                    RoundedCornerShape(100.dp),
+                ).clickable { navigator.navigate("/recipe/random") },
         )
     }
 }

@@ -14,6 +14,7 @@ import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
+import moe.tlaster.precompose.navigation.NavOptions
 import moe.tlaster.precompose.navigation.Navigator
 
 @Composable
@@ -25,7 +26,9 @@ fun recipeSearchButton(
     Box(
         Modifier
             .clip(RoundedCornerShape(20.dp))
-            .clickable(isAtLeastOneIngredientSelected) { navigator.navigate("/recipe/search/$ingredientList") }.shadow(8.dp)
+            .clickable(isAtLeastOneIngredientSelected) {
+                navigator.navigate("/recipe/search/$ingredientList", NavOptions(launchSingleTop = true))
+            }.shadow(8.dp)
             .background(
                 Brush.linearGradient(
                     getColors(isAtLeastOneIngredientSelected),
